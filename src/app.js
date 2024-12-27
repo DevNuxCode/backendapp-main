@@ -12,8 +12,12 @@ const auth = require('./modulos/auth/rutas')
 
 
 var corsOptions = {
-    origin: '*',
-    optionsSuccessStatus: 200
+    //origin: '*',
+    //optionsSuccessStatus: 200,
+    origin: "https://backendapp-iota.vercel.app/",
+    methods: ["POST", "GET", "DELETE", "PUT"],
+    credentials: true
+
 }
 
 // midleware
