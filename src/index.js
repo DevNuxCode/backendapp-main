@@ -1,7 +1,12 @@
-require('dotenv').config(); // Load environment variables
-
+ // Load environment variables
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config();
+  }
+  
 const app = require('./app');
 
-app.listen(app.get('port'), ()=> {
-    console.log("Servidor on localhost escuchando puerto ", app.get("port"));
+const PORT = process.env.PORT || app.get('port') || 3000;
+
+app.listen(PORT, ()=> {
+    console.log(`Servidor ejecutándose en puerto ${PORT}`);
 });
