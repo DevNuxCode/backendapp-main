@@ -1,4 +1,4 @@
-const db = require('../../db/mysql')
+const db = require('../../db/postgress')
 
 const bcrypt = require('bcrypt')
 const auth = require('../../auth')
@@ -10,7 +10,7 @@ module.exports=function(dbInyectada) {
 
     let db = dbInyectada
     if(!db){
-        db = require('../../db/mysql')
+        db = require('../../db/postgress')
     }
 
     async function login(usuario, password){

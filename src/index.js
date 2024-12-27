@@ -1,10 +1,10 @@
 //require('dotenv').config();
  // Load environment variables
-//f (process.env.NODE_ENV !== 'production') {
-    //require('dotenv').config();
-//  }
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config();
+  }
   
-require('dotenv').config(); // Load environment variables
+//require('dotenv').config(); // Load environment variables
 
 const app = require('./app');
 

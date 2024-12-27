@@ -5,7 +5,21 @@ const controlador = require('./index')
 
 const router = express.Router()
 
-router.get('/', todos)
+router.get('/', async (req, res) => {
+    try {
+        const usuarios = await controlador.todos();
+        res.json({
+            success: true,
+            data: usuarios
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+    }
+});
+
 router.get('/:id', uno)
 router.post('/',  agregar)
 router.put('/', seguridad(), eliminar)
@@ -24,21 +38,6 @@ router.delete('/:id', async (req, res) => {
         respuesta.error(req, res, 'Internal Server Error', 500);
     }
 });
-
-async function todos (req, res) {
-
-    try {
-        const items = await controlador.todos()
-        respuesta.success(req, res, items, 200)
-    }catch(err){
-        console.error('Error fetching items:', err)
-        respuesta.error(req, res, 'Internal Server Error', 500)
-
-    }
-    
-   
-    
-}
 
 async function uno(req, res) {
         try {

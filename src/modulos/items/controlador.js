@@ -1,35 +1,29 @@
-const db = require('../../db/mysql')
+const db = require('../../db/postgress');
 const tabla = 'item'
 
+const todos = async () => {
+    try {
+        const { rows } = await db.query(`SELECT * FROM  ${tabla}`);
+        return rows;
+    } catch (error) {
+        throw new Error('Error al obtener items: ' + error.message);
+    }
+};
 
+const agregar = async (item) => {
+    try {
+        const query = {
+            text: 'INSERT INTO items(nombre, descripcion, precio, user_id) VALUES($1, $2, $3, $4) RETURNING *',
+            values: [item.nombre, item.descripcion, item.precio, item.usuario_id]
+        };
+        const { rows } = await db.query(query);
+        return rows[0];
+    } catch (error) {
+        throw new Error('Error al agregar item: ' + error.message);
+    }
+};
 
-module.exports=function(dbInyectada) {
-    let db = dbInyectada
-    if(!db){
-        db = require('../../db/mysql')
-    }
-
-
-    function todos () {
-        return db.todos('item')
-    }
-    
-    function uno (id) {
-        return db.uno(tabla, id)
-    }
-    
-    function agregar (body) {
-        return db.agregar(tabla, body)
-    }
-    
-    function eliminar (body) {
-        return db.eliminar(tabla, body)
-    }
-    return {
-        todos,
-        uno,
-        eliminar,
-        agregar,
-    }
-    
-}
+module.exports = {
+    todos,
+    agregar
+};
