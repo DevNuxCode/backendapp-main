@@ -1,4 +1,4 @@
-const db = require('../../db/postgress')
+const db = require('../../db/mysql')
 const auth = require('../auth')
 const tabla = 'usuarios'
 
@@ -7,18 +7,13 @@ const tabla = 'usuarios'
 module.exports=function(dbInyectada) {
     let db = dbInyectada
     if(!db){
-        db = require('../../db/postgress')
+        db = require('../../db/mysql')
     }
 
 
-    const todos = async () => {
-        try {
-            const { rows } = await db.query('SELECT * FROM usuarios');
-            return rows;
-        } catch (error) {
-            throw new Error('Error al obtener usuarios: ' + error.message);
-        }
-    };
+    function todos () {
+        return db.todos('usuarios')
+    }
     
     function uno (id) {
         return db.uno(tabla, id)
