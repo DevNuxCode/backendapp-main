@@ -1,11 +1,10 @@
 const { Pool } = require('pg');
-const config = require('../config')
+require('dotenv').config();
 
 // Configuración de la conexión a PostgreSQL
 const pool = new Pool({
-  connectionString: config.db.connectionString,
+  connectionString: process.env.DATABASE_URL,
   ssl: {
-    require: true,
     rejectUnauthorized: false, // Ajustar según el entorno de despliegue
   },
 });
@@ -46,17 +45,12 @@ const createItem = async (nombre, descripcion, usuarioId) => {
 };
 
 const getItems = async () => {
-  return await query(`SELECT * FROM ${TABLA}  `);
+  return await query(`SELECT * FROM item`);
 };
 
 const getItemById = async (id) => {
   return await query(`SELECT * FROM item WHERE id = $1`, [id]);
 };
-
-const uno = async (tabla, id) => {
-  return await query(`SELECT * FROM ${tabla} WHERE id = $1`, [id]);
-};
-  
 
 const updateItem = async (id, nombre, descripcion) => {
   return await query(
@@ -71,7 +65,6 @@ const deleteItem = async (id) => {
 
 module.exports = {
   query,
-  uno,
   createUser,
   getUserByEmail,
   getUserById,

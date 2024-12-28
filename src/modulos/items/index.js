@@ -1,4 +1,4 @@
-const db = require('../../db/postgres')
+const db = require('../../db/mysql')
 const ctrl = require('./controlador')
 
 module.exports = ctrl(db)
