@@ -9,20 +9,7 @@ router.get('/:id', uno)
 router.post('/', agregar)
 router.put('/', eliminar)
 
-router.delete('/items/:id', async (req, res) => {
-    const itemId = req.params.id;
-    try {
-        const result = await controlador.eliminar(itemId);
-        if (result.affectedRows > 0) {
-            respuesta.success(req, res, 'Item deleted successfully', 200);
-        } else {
-            respuesta.error(req, res, 'Item not found', 404);
-        }
-    } catch (error) {
-        console.error('Error deleting item:', error);
-        respuesta.error(req, res, 'Internal Server Error', 500);
-    }
-});
+
 
 async function todos (req, res) {
 
